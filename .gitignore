@@ -141,3 +141,36 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# =========================
+# Backend (Python/FastAPI)
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.pytest_cache/
+
+# =========================
+# Database (SQLite)
+# =========================
+# データベースファイルをGitに含めると履歴が肥大化し、コンフリクトの原因になるため必ず除外します
+*.db
+*.sqlite
+*.sqlite3
+
+# =========================
+# Environment & IDE
+# =========================
+# セキュリティ上、環境変数ファイルは絶対にコミットしないようにします
+.env
+.env.local
+
+# OS・エディタの自動生成ファイル
+.DS_Store
+.vscode/
+.idea/
+
+# ドキュメント
+novel_gear_master_spec.md
