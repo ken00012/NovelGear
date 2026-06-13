@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "phase_type": "ki",
+    "title": "冒険の始まり",
+    "event_id": 1,
+    "event": {
+      "id": 1,
+      "chapter_number": "第1話",
+      "event_name": "旅立ちの日"
+    },
+    "character_arc": "未知の世界への期待と不安",
+    "content": "村を出発するまでの出来事",
+    "order_index": 0
+  }
+]

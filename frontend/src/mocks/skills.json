@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "name": "強斬り",
+    "description": "力任せの一撃",
+    "modifiers": [
+      {
+        "attribute": "str",
+        "attribute_name": "筋力",
+        "type": "percent",
+        "value": 10
+      }
+    ]
+  }
+]

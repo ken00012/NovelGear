@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "鉄の剣",
+    "description": "一般的な剣",
+    "rarity": "Common",
+    "modifiers": [
+      {
+        "attribute": "str",
+        "attribute_name": "筋力",
+        "type": "flat",
+        "value": 5
+      }
+    ]
+  }
+]

@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root[data-theme="light"],
+:root[data-theme="system"] {
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8fafc;
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-border: #e2e8f0;
+  --color-accent: #3b82f6;
+  --color-accent-hover: #2563eb;
+  --color-danger: #ef4444;
+  --color-success: #22c55e;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="system"] {
+    --color-bg-primary: #0f172a;
+    --color-bg-secondary: #1e293b;
+    --color-text-primary: #f1f5f9;
+    --color-text-secondary: #94a3b8;
+    --color-border: #334155;
+    --color-accent: #60a5fa;
+    --color-accent-hover: #93bbfd;
+    --color-danger: #f87171;
+    --color-success: #4ade80;
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-bg-primary: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-border: #334155;
+  --color-accent: #60a5fa;
+  --color-accent-hover: #93bbfd;
+  --color-danger: #f87171;
+  --color-success: #4ade80;
+}
+
+:root[data-theme="sepia"] {
+  --color-bg-primary: #fdf6e3;
+  --color-bg-secondary: #f5eedc;
+  --color-text-primary: #433422;
+  --color-text-secondary: #7c6a55;
+  --color-border: #e0d5c1;
+  --color-accent: #b58900;
+  --color-accent-hover: #cb9a00;
+  --color-danger: #dc322f;
+  --color-success: #859900;
+}
+
+:root[data-theme="forest"] {
+  --color-bg-primary: #f0f7f4;
+  --color-bg-secondary: #e2efe8;
+  --color-text-primary: #1a332a;
+  --color-text-secondary: #4a7c6a;
+  --color-border: #c8ddd2;
+  --color-accent: #2d8659;
+  --color-accent-hover: #23704a;
+  --color-danger: #d9534f;
+  --color-success: #3d9970;
+}
+
+:root[data-theme="ocean"] {
+  --color-bg-primary: #f0f7fa;
+  --color-bg-secondary: #e1eef5;
+  --color-text-primary: #1a2e3b;
+  --color-text-secondary: #4a7a8c;
+  --color-border: #c5dce8;
+  --color-accent: #0284c7;
+  --color-accent-hover: #0369a1;
+  --color-danger: #e74c3c;
+  --color-success: #06b6d4;
+}
+
+:root[data-theme="midnight"] {
+  --color-bg-primary: #1a1025;
+  --color-bg-secondary: #261538;
+  --color-text-primary: #e8e0f0;
+  --color-text-secondary: #a895c0;
+  --color-border: #3d2a55;
+  --color-accent: #a78bfa;
+  --color-accent-hover: #c4b5fd;
+  --color-danger: #fb7185;
+  --color-success: #86efac;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: "Noto Sans JP", "Inter", system-ui, sans-serif;
+}

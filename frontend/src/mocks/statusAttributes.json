@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "key": "hp",
+    "name": "HP",
+    "description": "体力",
+    "order_index": 0
+  },
+  {
+    "id": 2,
+    "key": "mp",
+    "name": "MP",
+    "description": "魔力ポイント",
+    "order_index": 1
+  },
+  {
+    "id": 3,
+    "key": "str",
+    "name": "筋力",
+    "description": "物理攻撃力に影響",
+    "order_index": 2
+  },
+  {
+    "id": 4,
+    "key": "spd",
+    "name": "速さ",
+    "description": "行動順に影響",
+    "order_index": 3
+  }
+]

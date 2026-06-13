@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "thread_id": 1,
+    "number": 1,
+    "name": "名無しさん",
+    "user_id_str": "A1B2C3D4",
+    "content": "最初の村を出てすぐスライムに遭遇したんだけどｗｗｗ",
+    "order_index": 0
+  },
+  {
+    "id": 2,
+    "thread_id": 1,
+    "number": 2,
+    "name": "名無しさん",
+    "user_id_str": "E5F6G7H8",
+    "content": "草",
+    "order_index": 1
+  }
+]

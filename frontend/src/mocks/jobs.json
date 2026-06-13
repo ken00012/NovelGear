@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "戦士",
+    "description": "物理攻撃に特化した基本ジョブ",
+    "base_stats": {
+      "hp": 100,
+      "str": 10,
+      "spd": 5
+    },
+    "stat_growth": {
+      "hp": 10,
+      "str": 2,
+      "spd": 1
+    }
+  }
+]

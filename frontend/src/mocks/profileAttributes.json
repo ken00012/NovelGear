@@ -1,0 +1,31 @@
+[
+  {
+    "id": 1,
+    "key": "attr_00000001",
+    "name": "役割",
+    "type": "text",
+    "order_index": 0,
+    "tags": []
+  },
+  {
+    "id": 2,
+    "key": "attr_00000002",
+    "name": "属性",
+    "type": "tag",
+    "order_index": 1,
+    "tags": [
+      {
+        "id": 1,
+        "attribute_id": 2,
+        "name": "火",
+        "color": "#ef4444"
+      },
+      {
+        "id": 2,
+        "attribute_id": 2,
+        "name": "水",
+        "color": "#3b82f6"
+      }
+    ]
+  }
+]

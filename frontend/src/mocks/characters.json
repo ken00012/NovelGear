@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "name": "アレン",
+    "profile_data": {
+      "attr_00000001": "主人公",
+      "attr_00000002": 1
+    },
+    "visibility_settings": {},
+    "is_status_enabled": true,
+    "job_id": 1,
+    "job": { "id": 1, "name": "戦士" },
+    "level": 10,
+    "talent_bonuses": {
+      "str": 5
+    },
+    "skills": [
+      { "id": 1, "name": "強斬り" }
+    ],
+    "equipments": [
+      { "id": 1, "name": "鉄の剣" }
+    ],
+    "custom_attributes": [],
+    "created_at": "2024-01-01T12:00:00Z",
+    "updated_at": "2024-01-01T12:00:00Z"
+  }
+]
