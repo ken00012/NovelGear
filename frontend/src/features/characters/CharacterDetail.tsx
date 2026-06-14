@@ -4,6 +4,8 @@ import { ArrowLeft } from 'lucide-react';
 import charactersData from '../../mocks/characters.json';
 import ProfileEditor from './ProfileEditor';
 
+import StatusEditor from './StatusEditor';
+
 export default function CharacterDetail() {
   const { id } = useParams();
   const character = charactersData.find(c => c.id === Number(id));
@@ -56,9 +58,7 @@ export default function CharacterDetail() {
           {activeTab === 'profile' ? (
             <ProfileEditor character={character} />
           ) : (
-            <div className="p-8 bg-bg-secondary border border-border rounded-xl text-center text-text-secondary shadow-sm">
-              <p>ステータス編集タブは現在開発中です。（プレースホルダー）</p>
-            </div>
+            <StatusEditor character={character} />
           )}
         </div>
       </div>
