@@ -2,10 +2,16 @@ import React, { useState } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 import equipmentsData from '../../mocks/equipments.json';
 import FormField from '../../components/FormField';
+import SortableList from '../../components/SortableList';
 
 export default function EquipmentTab() {
-  const [activeId, setActiveId] = useState<number | null>(equipmentsData.length > 0 ? equipmentsData[0].id : null);
-  const activeItem = equipmentsData.find(j => j.id === activeId);
+  const [items, setItems] = useState<any[]>(equipmentsData);
+  const [activeId, setActiveId] = useState<number | null>(items.length > 0 ? items[0].id : null);
+  const activeItem = items.find(j => j.id === activeId);
+
+  const handleSort = (newItems: any[]) => {
+    setItems(newItems);
+  };
 
   return (
     <div className="flex gap-8 flex-1 min-h-0">
@@ -15,23 +21,26 @@ export default function EquipmentTab() {
           <Plus size={18} /> 新規作成
         </button>
         
-        {equipmentsData.map(item => (
-          <div 
-            key={item.id}
-            onClick={() => setActiveId(item.id)}
-            className={`p-4 rounded-lg shadow-sm cursor-pointer flex flex-col gap-1 transition-all border ${
-              activeId === item.id 
-                ? 'bg-bg-primary border-accent' 
-                : 'bg-bg-secondary border-border hover:border-accent/50'
-            }`}
-          >
-            <div className="flex items-center justify-between">
-              <span className="font-bold text-text-primary">{item.name}</span>
-              {item.rarity && <span className="text-[10px] border border-accent text-accent px-1.5 py-0.5 rounded">{item.rarity}</span>}
+        <SortableList
+          items={items}
+          onSort={handleSort}
+          renderItem={(item) => (
+            <div 
+              onClick={() => setActiveId(item.id)}
+              className={`p-4 rounded-lg shadow-sm cursor-pointer flex flex-col gap-1 transition-all border bg-bg-primary ${
+                activeId === item.id 
+                  ? 'border-accent' 
+                  : 'border-border hover:border-accent/50'
+              }`}
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-text-primary">{item.name}</span>
+                {item.rarity && <span className="text-[10px] border border-accent text-accent px-1.5 py-0.5 rounded">{item.rarity}</span>}
+              </div>
+              <span className="text-xs text-text-secondary line-clamp-1">{item.description}</span>
             </div>
-            <span className="text-xs text-text-secondary line-clamp-1">{item.description}</span>
-          </div>
-        ))}
+          )}
+        />
       </div>
 
       {/* 右側: 編集フォーム (幅2/3) */}

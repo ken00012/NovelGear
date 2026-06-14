@@ -2,11 +2,17 @@ import React, { useState } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 import jobsData from '../../mocks/jobs.json';
 import FormField from '../../components/FormField';
+import SortableList from '../../components/SortableList';
 
 export default function JobTab() {
-  const [activeJobId, setActiveJobId] = useState<number | null>(jobsData.length > 0 ? jobsData[0].id : null);
+  const [items, setItems] = useState<any[]>(jobsData);
+  const [activeJobId, setActiveJobId] = useState<number | null>(items.length > 0 ? items[0].id : null);
   
-  const activeJob = jobsData.find(j => j.id === activeJobId);
+  const activeJob = items.find(j => j.id === activeJobId);
+
+  const handleSort = (newItems: any[]) => {
+    setItems(newItems);
+  };
 
   return (
     <div className="flex gap-8 flex-1 min-h-0">
@@ -17,21 +23,24 @@ export default function JobTab() {
           <Plus size={18} /> 新規作成
         </button>
         
-        {/* ▼ ここから jobs.json のデータを map で回す ▼ */}
-        {jobsData.map(job => (
-          <div 
-            key={job.id}
-            onClick={() => setActiveJobId(job.id)}
-            className={`p-4 rounded-lg shadow-sm cursor-pointer flex flex-col gap-1 transition-all border ${
-              activeJobId === job.id 
-                ? 'bg-bg-primary border-accent' 
-                : 'bg-bg-secondary border-border hover:border-accent/50'
-            }`}
-          >
-            <span className="font-bold text-text-primary">{job.name}</span>
-            <span className="text-xs text-text-secondary line-clamp-1">{job.description}</span>
-          </div>
-        ))}
+        {/* SortableList を使用してアイテムを展開 */}
+        <SortableList
+          items={items}
+          onSort={handleSort}
+          renderItem={(job) => (
+            <div 
+              onClick={() => setActiveJobId(job.id)}
+              className={`p-4 rounded-lg shadow-sm cursor-pointer flex flex-col gap-1 transition-all border bg-bg-primary ${
+                activeJobId === job.id 
+                  ? 'border-accent' 
+                  : 'border-border hover:border-accent/50'
+              }`}
+            >
+              <span className="font-bold text-text-primary">{job.name}</span>
+              <span className="text-xs text-text-secondary line-clamp-1">{job.description}</span>
+            </div>
+          )}
+        />
       </div>
 
       {/* 右側: 編集フォーム (幅2/3) */}

@@ -2,10 +2,17 @@ import React, { useState } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 import skillsData from '../../mocks/skills.json';
 import FormField from '../../components/FormField';
+import SortableList from '../../components/SortableList';
 
 export default function SkillTab() {
-  const [activeId, setActiveId] = useState<number | null>(skillsData.length > 0 ? skillsData[0].id : null);
-  const activeItem = skillsData.find(j => j.id === activeId);
+  const [items, setItems] = useState<any[]>(skillsData);
+  const [activeItemId, setActiveItemId] = useState<number | null>(items.length > 0 ? items[0].id : null);
+  
+  const activeItem = items.find(j => j.id === activeItemId);
+
+  const handleSort = (newItems: any[]) => {
+    setItems(newItems);
+  };
 
   return (
     <div className="flex gap-8 flex-1 min-h-0">
@@ -15,20 +22,24 @@ export default function SkillTab() {
           <Plus size={18} /> 新規作成
         </button>
         
-        {skillsData.map(item => (
-          <div 
-            key={item.id}
-            onClick={() => setActiveId(item.id)}
-            className={`p-4 rounded-lg shadow-sm cursor-pointer flex flex-col gap-1 transition-all border ${
-              activeId === item.id 
-                ? 'bg-bg-primary border-accent' 
-                : 'bg-bg-secondary border-border hover:border-accent/50'
-            }`}
-          >
-            <span className="font-bold text-text-primary">{item.name}</span>
-            <span className="text-xs text-text-secondary line-clamp-1">{item.description}</span>
-          </div>
-        ))}
+        {/* SortableList を使用してアイテムを展開 */}
+        <SortableList
+          items={items}
+          onSort={handleSort}
+          renderItem={(item) => (
+            <div 
+              onClick={() => setActiveItemId(item.id)}
+              className={`p-4 rounded-lg shadow-sm cursor-pointer flex flex-col gap-1 transition-all border bg-bg-primary ${
+                activeItemId === item.id 
+                  ? 'border-accent' 
+                  : 'border-border hover:border-accent/50'
+              }`}
+            >
+              <span className="font-bold text-text-primary">{item.name}</span>
+              <span className="text-xs text-text-secondary line-clamp-1">{item.description}</span>
+            </div>
+          )}
+        />
       </div>
 
       {/* 右側: 編集フォーム (幅2/3) */}

@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { restrictToVerticalAxis, restrictToParentElement } from '@dnd-kit/modifiers';
 import {
   DndContext,
   closestCenter,
@@ -53,7 +54,7 @@ export default function SortableList<T extends SortableItemType>({
   const itemIds = useMemo(() => items.map((item) => item.id), [items]);
 
   return (
-    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd} modifiers={[restrictToVerticalAxis, restrictToParentElement]}>
       <SortableContext items={itemIds} strategy={verticalListSortingStrategy}>
         <div className="flex flex-col gap-2">
           {items.map((item) => (

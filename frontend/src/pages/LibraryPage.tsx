@@ -3,6 +3,8 @@ import JobTab from '../features/library/JobTab';
 import SkillTab from '../features/library/SkillTab';
 import EquipmentTab from '../features/library/EquipmentTab';
 import GlossaryTab from '../features/library/GlossaryTab';
+import StatusAttributeTab from '../features/library/StatusAttributeTab';
+import ProfileAttributeTab from '../features/library/ProfileAttributeTab';
 
 export default function LibraryPage() {
   const [activeTab, setActiveTab] = useState('jobs');
@@ -44,11 +46,8 @@ export default function LibraryPage() {
       {activeTab === 'skills' && <SkillTab />}
       {activeTab === 'equipments' && <EquipmentTab />}
       {activeTab === 'glossary' && <GlossaryTab />}
-      {['status_attributes', 'profile_attributes'].includes(activeTab) && (
-        <div className="p-8 bg-bg-secondary border border-border rounded-xl text-center text-text-secondary shadow-sm flex-1">
-          <p>このタブは現在開発中です。（プレースホルダー）</p>
-        </div>
-      )}
+      {activeTab === 'status_attributes' && <StatusAttributeTab />}
+      {activeTab === 'profile_attributes' && <ProfileAttributeTab />}
     </div>
   );
 }
