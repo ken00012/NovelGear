@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import JobTab from '../features/library/JobTab';
+import SkillTab from '../features/library/SkillTab';
+import EquipmentTab from '../features/library/EquipmentTab';
+import GlossaryTab from '../features/library/GlossaryTab';
 
 export default function LibraryPage() {
   const [activeTab, setActiveTab] = useState('jobs');
@@ -38,8 +41,11 @@ export default function LibraryPage() {
 
       {/* メインコンテンツエリア (2カラム: 左一覧、右編集) */}
       {activeTab === 'jobs' && <JobTab />}
-      {activeTab !== 'jobs' && (
-        <div className="p-8 bg-bg-secondary border border-border rounded-xl text-center text-text-secondary shadow-sm">
+      {activeTab === 'skills' && <SkillTab />}
+      {activeTab === 'equipments' && <EquipmentTab />}
+      {activeTab === 'glossary' && <GlossaryTab />}
+      {['status_attributes', 'profile_attributes'].includes(activeTab) && (
+        <div className="p-8 bg-bg-secondary border border-border rounded-xl text-center text-text-secondary shadow-sm flex-1">
           <p>このタブは現在開発中です。（プレースホルダー）</p>
         </div>
       )}
