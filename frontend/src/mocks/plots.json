@@ -1,16 +1,19 @@
 [
   {
-    "id": 1,
-    "phase_type": "ki",
-    "title": "冒険の始まり",
-    "event_id": 1,
-    "event": {
-      "id": 1,
-      "chapter_number": "第1話",
-      "event_name": "旅立ちの日"
-    },
-    "character_arc": "未知の世界への期待と不安",
-    "content": "村を出発するまでの出来事",
-    "order_index": 0
+    "id": "card-1",
+    "columnName": "起 (Introduction)",
+    "title": "主人公の日常と旅立ち",
+    "description": "平和な村で暮らす主人公。しかし、ある日村の近くの森で魔物の異常発生が起こり、巻き込まれてしまう。",
+    "tags": [
+      { "text": "勇者アレン", "type": "character" },
+      { "text": "重要フラグ", "type": "flag" }
+    ]
+  },
+  {
+    "id": "card-2",
+    "columnName": "起 (Introduction)",
+    "title": "謎の少女との出会い",
+    "description": "森の奥で倒れていた少女を発見する。彼女は記憶を失っていた。",
+    "tags": []
   }
 ]
