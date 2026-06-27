@@ -3,57 +3,15 @@ import { Plus, Edit2, MoreHorizontal, Trash2 } from 'lucide-react';
 import mockPlots from '../mocks/plots.json';
 import PlotCreateModal from '../features/plot/PlotCreateModal';
 import PlotCardModal from '../features/plot/PlotCardModal';
-
-const TEMPLATES = {
-  blank: [],
-  kishotenketsu: [
-    '起 (Introduction)', 
-    '承 (Development)', 
-    '転 (Twist)', 
-    '結 (Conclusion)'
-  ],
-  threeAct: [
-    '第1幕: 設定 (Setup)', 
-    '第2幕: 対立 (Confrontation)', 
-    '第3幕: 解決 (Resolution)'
-  ],
-  herosJourney: [
-    '1. 日常の世界 (Ordinary World)',
-    '2. 冒険へのいざない (Call to Adventure)',
-    '3. 冒険の拒絶 (Refusal of the Call)',
-    '4. 賢者との出会い (Meeting the Mentor)',
-    '5. 第一関門突破 (Crossing the Threshold)',
-    '6. 試練、仲間、敵 (Tests, Allies, Enemies)',
-    '7. 最も危険な場所への接近 (Approach to the Inmost Cave)',
-    '8. 最大の試練 (Ordeal)',
-    '9. 報酬 (Reward)',
-    '10. 帰路 (The Road Back)',
-    '11. 復活 (Resurrection)',
-    '12. 宝を持っての帰還 (Return with the Elixir)'
-  ],
-  saveTheCat: [
-    '1. オープニング・イメージ (Opening Image)',
-    '2. テーマの提示 (Theme Stated)',
-    '3. セットアップ (Set-Up)',
-    '4. 触媒 (Catalyst)',
-    '5. 討論 (Debate)',
-    '6. 第2幕への突入 (Break into Two)',
-    '7. Bストーリー (B Story)',
-    '8. お楽しみ (Fun and Games)',
-    '9. ミッドポイント (Midpoint)',
-    '10. 迫り来る悪い奴ら (Bad Guys Close In)',
-    '11. すべてを失って (All is Lost)',
-    '12. 心の暗い夜 (Dark Night of the Soul)',
-    '13. 第3幕への突入 (Break into Three)',
-    '14. フィナーレ (Finale)',
-    '15. ファイナル・イメージ (Final Image)'
-  ]
-};
+import { PLOT_TEMPLATES, PLOT_BOARD_OPTIONS } from '../types/plot';
+import type { PlotTemplateKey, PlotCard } from '../types/plot';
 
 export default function PlotPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentTemplate, setCurrentTemplate] = useState<keyof typeof TEMPLATES>('kishotenketsu');
-  const [isCardModalOpen, setIsCardModalOpen] = useState(false);
+  const [currentTemplate, setCurrentTemplate] = useState<PlotTemplateKey>('kishotenketsu');
+  const [selectedCard, setSelectedCard] = useState<PlotCard | null>(null);
+
+  const plots = mockPlots as PlotCard[];
 
   return (
     <div className="w-full h-[calc(100vh-2rem)] flex flex-col p-6 md:p-8">
@@ -68,13 +26,11 @@ export default function PlotPage() {
               <select 
                 className="bg-transparent text-sm font-bold text-text-primary focus:outline-none cursor-pointer pr-4"
                 value={currentTemplate}
-                onChange={(e) => setCurrentTemplate(e.target.value as keyof typeof TEMPLATES)}
+                onChange={(e) => setCurrentTemplate(e.target.value as PlotTemplateKey)}
               >
-                <option value="kishotenketsu">全体プロット (起承転結)</option>
-                <option value="threeAct">第1章プロット (三幕構成)</option>
-                <option value="herosJourney">第2章プロット (ヒーローズ・ジャーニー)</option>
-                <option value="saveTheCat">長編構成 (ハリウッド方式)</option>
-                <option value="blank">自由帳 (空白のボード)</option>
+                {PLOT_BOARD_OPTIONS.map(opt => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                ))}
               </select>
             </div>
             <div className="flex gap-1 ml-1">
@@ -100,8 +56,8 @@ export default function PlotPage() {
       {/* ボードエリア (横スクロール) */}
       <div className="flex gap-4 overflow-x-auto pb-4 flex-1 items-start custom-scrollbar">
         
-        {TEMPLATES[currentTemplate].map((colName, idx) => {
-          const colCards = mockPlots.filter((p) => p.columnName === colName);
+        {PLOT_TEMPLATES[currentTemplate].map((colName, idx) => {
+          const colCards = plots.filter((p) => p.columnName === colName);
           
           return (
             <div key={idx} className="w-80 shrink-0 bg-bg-secondary rounded-xl p-3 flex flex-col max-h-full border border-border">
@@ -116,7 +72,7 @@ export default function PlotPage() {
               <div className="flex flex-col gap-3 overflow-y-auto custom-scrollbar pr-1">
                 {colCards.length > 0 ? (
                   colCards.map((card) => (
-                    <div key={card.id} onClick={() => setIsCardModalOpen(true)} className="bg-bg-primary p-3.5 rounded-lg border border-border shadow-sm cursor-grab active:cursor-grabbing hover:border-accent transition-colors group">
+                    <div key={card.id} onClick={() => setSelectedCard(card)} className="bg-bg-primary p-3.5 rounded-lg border border-border shadow-sm cursor-grab active:cursor-grabbing hover:border-accent transition-colors group">
                       <div className="flex justify-between items-start mb-2">
                         <h4 className="font-bold text-sm text-text-primary line-clamp-2">{card.title}</h4>
                         <div className="opacity-0 group-hover:opacity-100 flex gap-1 transition-opacity shrink-0">
@@ -164,7 +120,7 @@ export default function PlotPage() {
       </div>
 
       <PlotCreateModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-      <PlotCardModal isOpen={isCardModalOpen} onClose={() => setIsCardModalOpen(false)} />
+      <PlotCardModal isOpen={selectedCard !== null} onClose={() => setSelectedCard(null)} card={selectedCard} />
     </div>
   );
 }

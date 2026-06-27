@@ -1,11 +1,7 @@
 import React from 'react';
 import { Plus, GripVertical, Trash2 } from 'lucide-react';
 import EmptyState from '../../components/EmptyState';
-
-interface CustomAttribute {
-  key: string;
-  value: string;
-}
+import type { CustomAttribute } from '../../types/character';
 
 interface CustomAttributesProps {
   customAttributes: CustomAttribute[];

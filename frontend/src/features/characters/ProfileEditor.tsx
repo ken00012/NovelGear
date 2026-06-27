@@ -2,12 +2,16 @@ import React from 'react';
 import profileAttributes from '../../mocks/profileAttributes.json';
 import FormField from '../../components/FormField';
 import CustomAttributes from './CustomAttributes';
+import type { Character } from '../../types/character';
+import type { ProfileAttribute } from '../../types/library';
 
 interface ProfileEditorProps {
-  character: any; // モックデータの型
+  character: Character;
 }
 
 export default function ProfileEditor({ character }: ProfileEditorProps) {
+  const attrs = profileAttributes as ProfileAttribute[];
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
       {/* 左カラム：基本情報 */}
@@ -22,23 +26,23 @@ export default function ProfileEditor({ character }: ProfileEditorProps) {
             />
           </FormField>
 
-          {profileAttributes.map(attr => {
+          {attrs.map(attr => {
             const value = character.profile_data[attr.key] || '';
             return (
               <FormField key={attr.id} label={attr.name}>
                 {attr.type === 'text' ? (
                   <input 
                     type="text" 
-                    defaultValue={value} 
+                    defaultValue={String(value)} 
                     className="w-full bg-bg-primary border border-border text-text-primary rounded-lg px-4 py-2.5 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all"
                   />
                 ) : attr.type === 'tag' ? (
                   <select 
-                    defaultValue={value}
+                    defaultValue={String(value)}
                     className="w-full bg-bg-primary border border-border text-text-primary rounded-lg px-4 py-2.5 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all"
                   >
                     <option value="">未選択</option>
-                    {attr.tags?.map((t: any) => (
+                    {attr.tags?.map((t) => (
                       <option key={t.id} value={t.id}>{t.name}</option>
                     ))}
                   </select>

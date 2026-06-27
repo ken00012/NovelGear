@@ -5,14 +5,21 @@ import statusAttributes from '../../mocks/statusAttributes.json';
 import jobs from '../../mocks/jobs.json';
 import skillsData from '../../mocks/skills.json';
 import equipmentsData from '../../mocks/equipments.json';
+import type { Character } from '../../types/character';
+import type { StatusAttribute, Job, Skill, Equipment, Modifier } from '../../types/library';
 
 interface StatusEditorProps {
-  character: any;
+  character: Character;
 }
 
 export default function StatusEditor({ character }: StatusEditorProps) {
+  const attrs = statusAttributes as StatusAttribute[];
+  const jobList = jobs as Job[];
+  const skills = skillsData as Skill[];
+  const equipments = equipmentsData as Equipment[];
+
   // ステータス属性のモック計算値（実際の計算ロジックはフェーズ2以降）
-  const baseStats = character.status_data?.talent_bonus || {};
+  const baseStats = character.talent_bonuses || {};
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
@@ -38,11 +45,11 @@ export default function StatusEditor({ character }: StatusEditorProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <FormField label="メインジョブ">
               <select 
-                defaultValue={character.status_data?.job_id || ""}
+                defaultValue={character.job_id ?? ""}
                 className="w-full bg-bg-primary border border-border text-text-primary rounded-lg px-4 py-2.5 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all appearance-none cursor-pointer"
               >
                 <option value="">未選択</option>
-                {jobs.map(job => (
+                {jobList.map(job => (
                   <option key={job.id} value={job.id}>{job.name}</option>
                 ))}
               </select>
@@ -52,7 +59,7 @@ export default function StatusEditor({ character }: StatusEditorProps) {
               <input 
                 type="number" 
                 min="1"
-                defaultValue={character.status_data?.level || 1}
+                defaultValue={character.level || 1}
                 className="w-full bg-bg-primary border border-border text-text-primary rounded-lg px-4 py-2.5 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all"
               />
             </FormField>
@@ -63,7 +70,7 @@ export default function StatusEditor({ character }: StatusEditorProps) {
         <div className="bg-bg-secondary p-6 rounded-xl border border-border shadow-sm">
           <h3 className="text-lg font-bold text-text-primary border-b border-border pb-2 mb-4">才能ボーナス</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {statusAttributes.map(attr => (
+            {attrs.map(attr => (
               <FormField key={attr.id} label={attr.name}>
                 <input 
                   type="number" 
@@ -84,8 +91,7 @@ export default function StatusEditor({ character }: StatusEditorProps) {
             </button>
           </div>
           <div className="flex flex-col gap-3">
-            {/* skills.json のモックデータを展開（2件程度） */}
-            {skillsData.slice(0, 2).map((skill: any) => (
+            {skills.slice(0, 2).map((skill) => (
               <div key={skill.id} className="flex items-start justify-between bg-bg-primary border border-border p-3 rounded-lg">
                 <div className="flex flex-col gap-1.5">
                   <div className="flex items-center gap-2">
@@ -96,7 +102,7 @@ export default function StatusEditor({ character }: StatusEditorProps) {
                   {/* Modifierの表示エリア */}
                   {skill.modifiers && skill.modifiers.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 mt-0.5">
-                      {skill.modifiers.map((mod: any, idx: number) => (
+                      {skill.modifiers.map((mod: Modifier, idx: number) => (
                         <span key={idx} className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-accent/10 text-accent border border-accent/20">
                           {mod.attribute_name} {mod.value > 0 ? '+' : ''}{mod.value}{mod.type === 'percent' ? '%' : ''}
                         </span>
@@ -119,8 +125,7 @@ export default function StatusEditor({ character }: StatusEditorProps) {
             </button>
           </div>
           <div className="flex flex-col gap-3">
-            {/* equipments.json のモックデータを展開（2件程度） */}
-            {equipmentsData.slice(0, 2).map((equipment: any) => (
+            {equipments.slice(0, 2).map((equipment) => (
               <div key={equipment.id} className="flex items-start justify-between bg-bg-primary border border-border p-3 rounded-lg">
                 <div className="flex flex-col gap-1.5">
                   <div className="flex items-center gap-2">
@@ -132,7 +137,7 @@ export default function StatusEditor({ character }: StatusEditorProps) {
                   {/* Modifierの表示エリア */}
                   {equipment.modifiers && equipment.modifiers.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 mt-0.5">
-                      {equipment.modifiers.map((mod: any, idx: number) => (
+                      {equipment.modifiers.map((mod: Modifier, idx: number) => (
                         <span key={idx} className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-accent/10 text-accent border border-accent/20">
                           {mod.attribute_name} {mod.value > 0 ? '+' : ''}{mod.value}{mod.type === 'percent' ? '%' : ''}
                         </span>
@@ -156,7 +161,7 @@ export default function StatusEditor({ character }: StatusEditorProps) {
             <button className="text-xs bg-bg-secondary hover:bg-border text-text-secondary px-2 py-1 rounded transition-colors font-medium">コピー</button>
           </div>
           <div className="flex flex-col gap-3">
-            {statusAttributes.map(attr => {
+            {attrs.map(attr => {
               // モック用: 適当なベース値に才能ボーナスを加算した体裁にする
               const mockValue = (baseStats[attr.key] || 0) + (attr.key === 'hp' ? 150 : attr.key === 'mp' ? 50 : 10);
               return (

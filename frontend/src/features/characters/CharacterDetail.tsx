@@ -3,12 +3,13 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import charactersData from '../../mocks/characters.json';
 import ProfileEditor from './ProfileEditor';
-
 import StatusEditor from './StatusEditor';
+import type { Character } from '../../types/character';
 
 export default function CharacterDetail() {
   const { id } = useParams();
-  const character = charactersData.find(c => c.id === Number(id));
+  const characters = charactersData as Character[];
+  const character = characters.find(c => c.id === Number(id));
   const [activeTab, setActiveTab] = useState<'profile' | 'status'>('profile');
 
   if (!character) {

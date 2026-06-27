@@ -3,14 +3,17 @@ import { Link } from 'react-router-dom';
 import { Plus, Edit2, Trash2 } from 'lucide-react';
 import charactersData from '../../mocks/characters.json';
 import profileAttributes from '../../mocks/profileAttributes.json';
+import type { Character } from '../../types/character';
+import type { ProfileAttribute } from '../../types/library';
 
 export default function CharacterList() {
-  const characters = charactersData;
+  const characters = charactersData as Character[];
+  const attrs = profileAttributes as ProfileAttribute[];
 
-  const attrMap = profileAttributes.reduce((acc, attr) => {
+  const attrMap = attrs.reduce((acc, attr) => {
     acc[attr.key] = attr;
     return acc;
-  }, {} as Record<string, any>);
+  }, {} as Record<string, ProfileAttribute>);
 
   return (
     <div className="w-full max-w-7xl mx-auto p-6 md:p-8">
@@ -24,7 +27,6 @@ export default function CharacterList() {
 
       {/* グリッドエリア */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {/* ▼ ここから下を characters.map で回す ▼ */}
         {characters.map(character => (
           <Link 
             to={`/characters/${character.id}`}
@@ -35,13 +37,12 @@ export default function CharacterList() {
               {/* カードヘッダー（名前とアクション） */}
               <div className="flex items-start justify-between border-b border-border pb-3">
                 <div className="flex items-center gap-3">
-                  {/* アバターのプレースホルダー（必要に応じて） */}
+                  {/* アバターのプレースホルダー */}
                   <div className="w-12 h-12 rounded-full bg-bg-secondary flex items-center justify-center text-text-secondary font-bold text-lg">
                     {character.name.charAt(0)}
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-text-primary">{character.name}</h3>
-                    {/* 役割などの重要タグをここに1つ表示してもよい */}
                   </div>
                 </div>
                 <div className="flex gap-2 text-text-secondary">
@@ -52,14 +53,13 @@ export default function CharacterList() {
 
               {/* プロフィール項目リスト（タグバッジ風） */}
               <div className="flex flex-wrap gap-2">
-                {/* ▼ 各属性（短いもの）を map で回す ▼ */}
                 {Object.entries(character.profile_data || {}).map(([key, value]) => {
                   const attrDef = attrMap[key];
                   const resolvedAttributeName = attrDef ? attrDef.name : key;
                   
                   let attributeValue = String(value);
                   if (attrDef && attrDef.type === 'tag' && attrDef.tags) {
-                    const tag = attrDef.tags.find((t: any) => t.id === Number(value));
+                    const tag = attrDef.tags.find((t) => t.id === Number(value));
                     if (tag) attributeValue = tag.name;
                   }
 
